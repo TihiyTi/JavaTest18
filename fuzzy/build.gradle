@@ -1,0 +1,4 @@
+dependencies {
+    compile group:'me.xdrop', name:'fuzzywuzzy', version:'1.2.0'
+    compile project(':core')
+}

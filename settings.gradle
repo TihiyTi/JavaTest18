@@ -1,0 +1,10 @@
+rootProject.name = 'JavaTest18'
+
+include ':iomodule'
+include ':fxtest'
+include ':excel'
+include ':reo'
+include ':fx'
+include ':micro'
+include ':fuzzy'
+include ':core'

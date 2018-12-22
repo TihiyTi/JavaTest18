@@ -1,0 +1,83 @@
+plugins {
+    id 'java'
+}
+
+group 'com'
+version '0.1'
+
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    compileJava.options.encoding = 'UTF-8'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        maven {url 'https://jitpack.io'}
+    }
+//
+    dependencies {
+        compile group:'org.apache.logging.log4j',name:'log4j-api',version:'2.8.2'
+        compile group:'org.apache.logging.log4j',name:'log4j-core',version:'2.8.2'
+        compile group: 'junit', name: 'junit', version: '4.12'
+//        compile group: 'commons-io', name: 'commons-io', version: '2.5'
+//
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+//        compile group:'com.google.guava',name:'guava',version:'15.0'
+//        compile files('lib/JLink.jar')
+    }
+}
+
+project(':iomodule'){
+//    apply plugin: 'application'
+
+}
+project(':excel'){
+    dependencies {
+        compile group: 'org.apache.poi', name: 'poi', version: '4.0.0'
+//        compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+        compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
+        compile project(':core')
+
+        compile group:  'org.controlsfx', name:  'controlsfx', version:  '8.40.14'
+
+//        implementation 'com.github.TihiyTi:jitpacktest:b60d65f166e40e95032e0fc8dfe2c46362beaacf'
+//        compile 'com.github.TihiyTi.jitpacktest:module1:master-SNAPSHOT'
+        implementation 'com.github.TihiyTi.jitpacktest:module1:b60d65f166e40e95032e0fc8dfe2c46362beaacf'
+
+
+//        implementation 'com.github.TihiyTi:tijavalib:master-SNAPSHOT'
+//        implementation 'com.github.tihiyti:tijavalib:d22d1c20132889f8094b750b7a2fddbbc51f11de'
+        implementation 'com.github.TihiyTi.tijavalib:Module1:12b81b50a140693f6ea985af6e06059e79330bb1'
+//        Работает
+//        implementation 'com.github.TihiyTi.tijavalib:TiUtils:12b81b50a140693f6ea985af6e06059e79330bb1'
+    }
+}
+project(':reo'){
+
+}
+project(':micro'){
+    dependencies{
+//        compile files('../lib/JLink.jar')
+//        testCompile files('../lib/JLink.jar')
+//        test files('../lib/JLink.jar')
+        compile group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
+        compile project(':reo')
+    }
+}
+
+project(':fxtest'){
+    apply plugin: 'application'
+    mainClassName = "com.com.FXSimpleView"
+
+    jar.manifest {
+        attributes 'Created-By': 'Ti'
+        attributes 'Main-Class': 'com.com.FXSimpleView'
+    }
+    jar {
+        from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

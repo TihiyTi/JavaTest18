@@ -1,0 +1,14 @@
+package com.ti.temp;
+
+public interface InterfaceModel {
+    double getPotentialInPoint(ReoPoint point);
+    double getBasePotInPoint(ReoPoint point);
+
+    void setElectrodeSystem(ElectrodeSystem e);
+    void setBodyGeometry(BodyGeometry b);
+
+    BodyGeometry getBodyGeometry();
+
+    void setRoTissue(double roTissue);
+    void resetRoTissue();
+}

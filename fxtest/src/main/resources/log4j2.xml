@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration package="com.ti"
+               status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="FileEvent" append="false" fileName="./log/mylogfile.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+
+    <Loggers>
+        <!--<Logger name="TiSerialServiceLogger" level="info">-->
+            <!--<AppenderRef ref="FileData"/>-->
+            <!--<AppenderRef ref="Console"/>-->
+        <!--</Logger>-->
+
+        <Root level="TRACE">
+            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="Console" level="TRACE"/>
+            <AppenderRef ref="FileEvent"/>
+        </Root>
+    </Loggers>
+</Configuration>

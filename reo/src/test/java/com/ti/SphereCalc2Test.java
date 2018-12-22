@@ -1,6 +1,7 @@
 package com.ti;
 
 import com.ti.reo.SphereCalc2;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class SphereCalc2Test {
         double res = SphereCalc2.getFullImpedance(3,1.35, 0.04,0.02, 0.042,0.02, 0,0.035);
         assertEquals(30.3645, res, 0.001);
     }
+    @Ignore
     @Test
     public void timeCalc2Test() throws Exception {
         long start_time = System.nanoTime();

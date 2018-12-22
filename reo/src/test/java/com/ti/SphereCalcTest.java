@@ -81,7 +81,7 @@ public class SphereCalcTest{
 //        System.out.println(proc1.getDeltaRadius(-0.061, -0.018));
 
     }
-
+    @Ignore
     @Test
     public void timeCalcObjectTest() throws Exception {
 
@@ -97,6 +97,7 @@ public class SphereCalcTest{
         System.out.println(difference);
         System.out.println(res.size());
     }
+    @Ignore
     @Test
     public void timeCalcTest() throws Exception {
 

@@ -10,29 +10,29 @@ public class ReoMathUtilsTest {
 
     @Test
     public void arrayVariants() {
-        List<double[]> list = ReoMathUtils.arrayVariants(1,0.5, true,
-                1,0.1,true,
+        List<double[]> list = ReoMathUtils.arrayVariants(1,1, true,
+                1,1,true,
                 1,1,false);
-
+        list.forEach(x-> System.out.println(Arrays.toString(x)));
         double[][] expectedArray = new double[][]{
-                {-0.5, -0.1, 0.0},
-                {-0.5, -0.1, 1.0},
-                {-0.5, 0.0, 0.0},
-                {-0.5, 0.0, 1.0},
-                {-0.5, 0.1, 0.0},
-                {-0.5, 0.1, 1.0},
-                {0.0, -0.1, 0.0},
-                {0.0, -0.1, 1.0},
+                {-1.0, -1.0, 0.0},
+                {-1.0, -1.0, 1.0},
+                {-1.0, 0.0, 0.0},
+                {-1.0, 0.0, 1.0},
+                {-1.0, 1.0, 0.0},
+                {-1.0, 1.0, 1.0},
+                {0.0, -1.0, 0.0},
+                {0.0, -1.0, 1.0},
                 {0.0, 0.0, 0.0},
                 {0.0, 0.0, 1.0},
-                {0.0, 0.1, 0.0},
-                {0.0, 0.1, 1.0},
-                {0.5, -0.1, 0.0},
-                {0.5, -0.1, 1.0},
-                {0.5, 0.0, 0.0},
-                {0.5, 0.0, 1.0},
-                {0.5, 0.1, 0.0},
-                {0.5, 0.1, 1.0}};
+                {0.0, 1.0, 0.0},
+                {0.0, 1.0, 1.0},
+                {1.0, -1.0, 0.0},
+                {1.0, -1.0, 1.0},
+                {1.0, 0.0, 0.0},
+                {1.0, 0.0, 1.0},
+                {1.0, 1.0, 0.0},
+                {1.0, 1.0, 1.0}};
 //        list.forEach(x-> System.out.println(Arrays.toString(x)));
         IntStream.range(0, list.size()).forEach(x-> assertArrayEquals(expectedArray[x], list.get(x), 0.001));
     }

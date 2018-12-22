@@ -1,3 +1,5 @@
+package com.ti;
+
 import com.ti.check.CheckRuleBuilder;
 import com.ti.check.MultyContainCheck;
 

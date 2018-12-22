@@ -1,6 +1,7 @@
-import org.junit.Test;
+package com.ti;
 
-import static org.junit.Assert.*;
+import com.ti.Hospital;
+import org.junit.Test;
 
 public class SimpleFuzzyTestTest {
     @Test

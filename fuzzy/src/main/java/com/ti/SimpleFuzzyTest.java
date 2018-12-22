@@ -1,5 +1,6 @@
+package com.ti;
+
 import com.ti.check.CheckRuleBuilder;
-import com.ti.check.MultyContainCheck;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.io.IOException;

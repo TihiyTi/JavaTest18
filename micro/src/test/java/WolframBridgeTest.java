@@ -3,6 +3,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import wolframbridge.WolframBridge;
 import wolframreo.CycleRadialData;
+import wolframreo.TimeStampRadialData;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -27,7 +28,7 @@ public class WolframBridgeTest {
     @Ignore
     @Test
     public void test2(){
-        CycleRadialData data = WolframBridge.w_GetRadial("Alex");
+        TimeStampRadialData data = WolframBridge.w_GetRadialPoint("Alex");
         System.out.println(data.toString());
     }
     @Ignore

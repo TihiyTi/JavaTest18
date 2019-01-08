@@ -61,7 +61,7 @@ project(':reo'){
 }
 project(':micro'){
     dependencies{
-        compile files('../lib/JLink.jar')
+//        compile files('../lib/JLink.jar')
 //        runtime files('../lib/JLink.jar')
 //        testRuntime files('../lib/JLink.jar')
 //        test files('../lib/JLink.jar')

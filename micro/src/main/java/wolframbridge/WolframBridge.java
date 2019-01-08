@@ -1,12 +1,15 @@
 package wolframbridge;
 
-import com.wolfram.jlink.KernelLink;
-import com.wolfram.jlink.MathLinkException;
-import com.wolfram.jlink.MathLinkFactory;
+import com.wolfram.jlink.*;
 import wolframreo.CycleRadialData;
+import wolframreo.SignalRadialData;
+import wolframreo.TimeStampRadialData;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class WolframBridge {
@@ -14,9 +17,42 @@ public class WolframBridge {
     public static KernelLink wolframKernel = null;
 
     public static void main(String[] args) {
-        initKernel();
-//        w_GetRadial("Alex");
+        if(wolframKernel == null){initKernel();}
+//        PacketListener stdoutPrinter = new PacketPrinter(System.out);
+//        wolframKernel.addPacketListener(stdoutPrinter);
+        SignalRadialData data = w_SignalRadialData("Artem");
+        IntStream.range(0,25).forEach(x->System.out.println(data.getCycleRadialData().get(0).getDataAtTime(x).toString()));
+//        w_GetRadialPoint("Alex");
     }
+
+    public static SignalRadialData w_SignalRadialData(String name){
+        SignalRadialData signalRadialData = null;
+        if(wolframKernel == null){initKernel();}
+        try {
+            //todo rename function SimpleExport
+            doAndWait("SimpleExport[\""+name+"\"]");
+            Expr e = wolframKernel.getExpr();
+            int[] dimension = e.dimensions();
+            int numOfCicle = dimension[0];
+            List<CycleRadialData> listOfCycle = IntStream.range(1,numOfCicle+1).mapToObj(x -> parseCycleData(e.part(x))).collect(Collectors.toList());
+            signalRadialData = new SignalRadialData(listOfCycle);
+        } catch (MathLinkException e ) {
+            e.printStackTrace();
+        }
+        return signalRadialData;
+
+    }
+    private static CycleRadialData parseCycleData(Expr e){
+        try {
+            double [] base = (double[])(e.part(2).asArray(Expr.REAL, 1));
+            double [][] pulse = (double[][])e.part(1).asArray(Expr.REAL, 2);
+            return new CycleRadialData( base, pulse);
+        } catch (ExprFormatException e1) {
+            e1.printStackTrace();
+            return null;
+        }
+    }
+
 
     public static double[][] w_AtrialPoints(String name){
         try {
@@ -30,6 +66,7 @@ public class WolframBridge {
     public static double[][] w_GetParam(String name){
         return Stream.of("a","b","R","h","x","y").map(x-> getDoubleArray("GetParam[\""+name+"\"][\""+x+"\"]")).toArray(double[][]::new);
     }
+
     public static double[][] w_NewGetParam(String name){
         return Stream.of("a","b","R","h","x","y").map(x-> getDoubleArray("GetNewParam[\""+name+"\"][\""+x+"\"]")).toArray(double[][]::new);
     }
@@ -45,15 +82,13 @@ public class WolframBridge {
     public static double[][] w_ElectrodSystemPoints(String name){
         return Arrays.stream(Objects.requireNonNull(w_HeartContour(name))).skip(1).limit(5).toArray(double[][]::new);
     }
-    public static CycleRadialData w_GetRadial(String name){
+    public static TimeStampRadialData w_GetRadialPoint(String name){
         double[] dZ = getDoubleArray("GetRadial[\""+name+"\"][\"dZRad\"]");
         double[] zBase = getDoubleArray("GetRadial[\""+name+"\"][\"zBase\"]");
         double flBase = getDouble("GetRadial[\""+name+"\"][\"flBase\"]");
         double dZfl = getDouble("GetRadial[\""+name+"\"][\"flDZ\"]");
-        return new CycleRadialData(zBase,dZ,flBase,dZfl);
+        return new TimeStampRadialData(zBase, dZ, flBase, dZfl);
     }
-
-
 
     private static void doAndWait(String evaluate) throws MathLinkException {
         if(wolframKernel == null){initKernel();}
